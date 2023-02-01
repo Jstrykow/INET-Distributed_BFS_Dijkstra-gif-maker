@@ -37,7 +37,7 @@ for i, edge in enumerate(edges):
     plt.close() 
 
     # build gif
-    with imageio.get_writer('graph-as-gif.gif', mode='I') as writer:
+    with imageio.get_writer('graph-as-gif.gif', mode='I',  fps=1) as writer:
         for filename in filenames:
             image = imageio.imread(filename)
             writer.append_data(image)
