@@ -10,3 +10,5 @@ In main.py user can add or odd nodes and edges but must set the root node.
 Example result gif:
 
 ![Distributed_BFS_Dijkstra](https://user-images.githubusercontent.com/61683825/218271165-b420a971-101f-4405-a3f4-fef7e58d51e3.gif)
+
+more in YT video: https://youtu.be/GiFNtLBMsq0
