@@ -41,7 +41,7 @@ def dijkstra(G: nx.Graph(), root_id):
     #   remove_edge(e, unknow_edges)
 
     #utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS,red_edges=red_edges, orange_nodes=orange_nodes)
-    print(edges_in_phase, nodes_in_phase)
+    print(f"Phase: {phase}, nodes: {nodes_in_phase[phase]}, edges: {edges_in_phase[phase]}")
     while len(orange_nodes) != 0:
         know_nodes += orange_nodes
         know_edges += orange_edges
@@ -80,7 +80,7 @@ def dijkstra(G: nx.Graph(), root_id):
         #draw sending ACK with red
         utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
         phase+= 1
-        print(edges_in_phase, nodes_in_phase)
+        print(f"Phase: {phase}, nodes: {nodes_in_phase[phase]}, edges: {edges_in_phase[phase]}")
     utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=[], green_edges=BFS, red_edges=[], orange_nodes=orange_nodes)
     
 def remove_edge(edge, edges):

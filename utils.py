@@ -8,13 +8,8 @@ import networkx as nx
 import os
 import globals
 
-# to-do add reading from file
-# add algorithms, which would color nodes
-# delete or replace img after changing color; maybe a function
-# names of files
 
-number = 0
-
+ColorLegend = {'No used': 1,'ACK': 2, 'No-ACK': 4, 'Tree': 3}
 
 # dodac zmiane nazwy 
 def define_graph(nodes, edges):
@@ -38,17 +33,21 @@ def draw_graph(G : nx.Graph(), blue_nodes, green_nodes, orange_nodes, orange_edg
     nx.draw_networkx_edges(G, pos, edgelist=orange_edges, edge_color="orange", label="ACK", width=4)
     nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color="red", label="NACK", width=4)
     nx.draw_networkx_labels(G, pos, font_size=20, font_color="whitesmoke", font_family="sans-serif")
-
     # show
     ax = plt.gca()
     ax.margins(0.08)
     plt.axis("off")
-    plt.tight_layout()
+    #plt.tight_layout()   
+    plt.title("Distributed BFS: Dijkstra Flavor", weight="bold", size='x-large')
+    plt.text(0.9, 0.9, 'ACK', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes, c="orange", animated=True, size='x-large', weight="bold")
+    plt.text(0.9, 0.85, 'No-ACK', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes, c="red", animated=True, size='x-large', weight="bold")
+    plt.text(0.9, 0.80, 'In-Tree', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes, c="green", animated=True, size='x-large', weight="bold")
+    plt.text(0.9, 0.75, 'No-use', horizontalalignment='center', verticalalignment='center', transform=ax.transAxes, c="black", animated=True, size='x-large', weight="bold")
     #plt.show()
-
     # set name of file
     filename = f'{globals.DIRECTORY +  str(len(os.listdir(globals.DIRECTORY)))}.png'
     plt.draw()
+    
     plt.savefig(filename)
     plt.close()
     #make_gif(filenames=filenames)
