@@ -29,12 +29,15 @@ def draw_graph(G : nx.Graph(), blue_nodes, green_nodes, orange_nodes, orange_edg
     # edges
     nx.draw_networkx_edges(G, pos, edgelist=G.edges(data=True), width=4)
     nx.draw_networkx_edges(G, pos, edgelist=green_edges, edge_color="green", width=4)
-    nx.draw_networkx_edges(G, pos, edgelist=orange_edges, edge_color="orange", width=4)
-    nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color="red", width=4)
+    nx.draw_networkx_edges(G, pos, edgelist=orange_edges, edge_color="orange", label="ACK", width=4)
+    nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color="red", label="NACK", width=4)
     nx.draw_networkx_labels(G, pos, font_size=20, font_color="whitesmoke", font_family="sans-serif")
     # edge weight labels
     #edge_labels = nx.get_edge_attributes(G, "weight")
     #nx.draw_networkx_edge_labels(G, pos, edge_labels)
+
+    # labels
+    
 
     ax = plt.gca()
     ax.margins(0.08)

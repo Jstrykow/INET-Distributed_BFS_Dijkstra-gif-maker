@@ -41,7 +41,7 @@ def dijkstra(G: nx.Graph(), root_id):
     #   remove_edge(e, unknow_edges)
 
     #utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS,red_edges=red_edges, orange_nodes=orange_nodes)
-
+    print(edges_in_phase, nodes_in_phase)
     while len(orange_nodes) != 0:
         know_nodes += orange_nodes
         know_edges += orange_edges
@@ -58,10 +58,11 @@ def dijkstra(G: nx.Graph(), root_id):
             for n in G.neighbors(current_node):
                 if n not in know_nodes:
                     orange_nodes.append(n)
+        
         orange_nodes = list(dict.fromkeys(orange_nodes))
         orange_edges = list(dict.fromkeys(orange_edges))
-        nodes_in_phase = {phase+1: orange_nodes}
-        edges_in_phase = {phase+1: orange_edges}
+        nodes_in_phase = {phase+1: orange_nodes.copy()}
+        edges_in_phase = {phase+1: orange_edges.copy()}
         
         #draw sending ACK
         #utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=orange_edges,green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
@@ -69,18 +70,17 @@ def dijkstra(G: nx.Graph(), root_id):
         for e in orange_edges:
             if e[0] and e[1] in know_nodes:
                 red_edges.append(e)
-                #remove_edge(e, unknow_edges)
+                # remove_edge(e, unknow_edges)
             else:
                 BFS.append(e)
                 know_nodes.append(e[0])
                 know_nodes.append(e[1])
                 know_nodes = list(dict.fromkeys(know_nodes))
-                #remove_edge(e, unknow_edges)
+                # remove_edge(e, unknow_edges)
         #draw sending ACK with red
         utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
-        
         phase+= 1
-    print(edges_in_phase, nodes_in_phase)
+        print(edges_in_phase, nodes_in_phase)
     
 def remove_edge(edge, edges):
     try:
@@ -96,4 +96,4 @@ def sort_tuple_list(tuple_list):
     sorted_tuple_list = []
     for n in tuple_list:
         sorted_tuple_list.append(sorted(n))
-    return sort_tuple_list
+    return sorted_tuple_list
