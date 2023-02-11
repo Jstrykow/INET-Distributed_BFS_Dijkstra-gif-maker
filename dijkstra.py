@@ -63,10 +63,8 @@ def dijkstra(G: nx.Graph(), root_id):
         orange_edges = list(dict.fromkeys(orange_edges))
         nodes_in_phase = {phase+1: orange_nodes.copy()}
         edges_in_phase = {phase+1: orange_edges.copy()}
-        
         #draw sending ACK
         #utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=orange_edges,green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
-        
         for e in orange_edges:
             if e[0] and e[1] in know_nodes:
                 red_edges.append(e)

@@ -24,9 +24,9 @@ def draw_graph(G : nx.Graph(), blue_nodes, green_nodes, orange_nodes, orange_edg
    
     # nodes
     nx.draw_networkx_nodes(G, pos,nodelist=blue_nodes, node_color="tab:blue", node_size=700)
-    nx.draw_networkx_nodes(G, pos,nodelist=orange_nodes, node_color="tab:orange", node_size=700)
     nx.draw_networkx_nodes(G, pos,nodelist=green_nodes, node_color="tab:green", node_size=700)
-     
+    nx.draw_networkx_nodes(G, pos,nodelist=orange_nodes, node_color="tab:orange", node_size=700)
+    
     # edges
     nx.draw_networkx_edges(G, pos, edgelist=G.edges(data=True), width=4)
     nx.draw_networkx_edges(G, pos, edgelist=green_edges, edge_color="green", width=4)

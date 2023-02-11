@@ -1,2 +1,2 @@
-SEED = 1
+SEED = 2
 DIRECTORY = "img/"
