@@ -1,17 +1,22 @@
 # https://towardsdatascience.com/basics-of-gifs-with-pythons-matplotlib-54dd544b6f30
 # https://networkx.org/documentation/stable/reference/classes/graph.html
 
-import networkx as nx
+
 import matplotlib.pyplot as plt
 import imageio.v2 as imageio # gifs
+import networkx as nx
 
 # to-do add reading from file
 # add algorithms, which would color nodes
 # delete or replace img after changing color; maybe a function
 
 # dodac zmiane nazwy 
-
-
+def define_graph(blue_nodes, oragne_nodes, edges):
+    # undirected graph
+    G = nx.Graph()
+    G.add_nodes_from(blue_nodes+oragne_nodes)
+    G.add_edges_from(edges)
+    return G
 
 def draw_graph(G : nx.Graph(), blue_nodes, oragne_nodes, yellow_edges, red_edges):
     pos = nx.spring_layout(G, seed=100)  # positions for all nodes - seed for reproducibility
@@ -22,7 +27,6 @@ def draw_graph(G : nx.Graph(), blue_nodes, oragne_nodes, yellow_edges, red_edges
     # edges
     nx.draw_networkx_edges(G, pos, edgelist=G.edges(data=True), width=4)
     nx.draw_networkx_edges(G, pos, edgelist=yellow_edges, edge_color="yellow", width=4)
-    nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color="red", width=4)
 
     nx.draw_networkx_labels(G, pos, font_size=20, font_color="whitesmoke", font_family="sans-serif")
     # edge weight labels
