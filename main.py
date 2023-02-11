@@ -14,7 +14,7 @@ G = define_graph(
     nodes = nodes, edges=edges
     )
 
-#draw_graph(G,blue_nodes = blue_nodes,oragne_nodes= oragne_nodes, yellow_edges=yellow_edges,red_edges=red_edges)
+#draw_graph(G,blue_nodes = blue_nodes,oragne_nodes= oragne_nodes,yellow_nodes=yellow_nodes yellow_edges=yellow_edges,red_edges=red_edges)
 
 
 dijkstra(G, root_id=root_id)

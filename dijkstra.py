@@ -7,8 +7,8 @@ def dijkstra(G: nx.Graph(), root_id):
     edges = [n for n in G.edges]
     nodes = [n for n in G.nodes]
     oragne_nodes = [root_id]
-    yellow_edges = []
-    yellow_nodes = []
+    orange_edges = []
+    orange_nodes = []
     red_edges = []
     BFS = []
     know_edges = []
@@ -21,49 +21,71 @@ def dijkstra(G: nx.Graph(), root_id):
     phase = 1
     current_node = root_id
 
-    # nodes edges in ith phase
-    nodes_in_phase = {1: [n for n in G.neighbors(root_id)]}
-    edges_in_phase = {1: [n for n in G.edges(root_id)]}
+    # def
+    utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS,red_edges=red_edges, orange_nodes=orange_nodes)
+
 
     # broadcast p
-    oragne_nodes = nodes.copy()
-    for n in unknow_nodes:
-        oragne_nodes.remove(n)
-    yellow_edges=edges_in_phase[phase].copy()
-    utils.draw_graph( G, blue_nodes=unknow_nodes, oragne_nodes=oragne_nodes, yellow_edges=yellow_edges, green_edges=BFS,red_edges=red_edges)
+    orange_nodes= [n for n in G.neighbors(root_id)]
+    orange_edges= [n for n in G.edges(root_id)]
+    nodes_in_phase = {phase: orange_nodes.copy()}
+    edges_in_phase = {phase: orange_edges.copy()}
+    utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS,red_edges=red_edges, orange_nodes=orange_nodes)
 
     # ack first edges all add to BFS
     BFS = edges_in_phase[phase].copy()
-    know_edges+=yellow_edges
-    for e in yellow_edges:
-        unknow_edges = remove_edge(e,unknow_edges)
-    yellow_edges = []
-    know_nodes+=nodes_in_phase[phase]
+    know_nodes+= orange_nodes
+    know_edges+= orange_edges
+    for e in know_edges:
+       remove_edge(e, unknow_edges)
+    orange_edges= []
+    orange_nodes= []
 
-    utils.draw_graph( G,blue_nodes=unknow_nodes,oragne_nodes=know_nodes, yellow_edges=yellow_edges,green_edges=BFS,red_edges=red_edges)
+    utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS,red_edges=red_edges, orange_nodes=orange_nodes)
 
-    while phase<3:
-        print(know_nodes)
-        print(know_edges)
+    while len(unknow_edges) > 0:
         for current_node in nodes_in_phase[phase]:
             for e in G.edges(current_node):
-                if e in unknow_edges:
-                    yellow_edges.append(e)
+                if e not in know_edges and (e[1], e[0]) not in know_edges:
+                    orange_edges.append(e)
             for n in G.neighbors(current_node):
-                if n in unknow_nodes:
-                    yellow_nodes.append(n)
-        yellow_nodes = list(dict.fromkeys(yellow_nodes))
-        yellow_edges = list(dict.fromkeys(yellow_edges))
-        utils.draw_graph( G,blue_nodes=unknow_nodes,oragne_nodes=know_nodes, yellow_edges=yellow_edges,green_edges=BFS,red_edges=red_edges)
-        edges_in_phase = {phase+1: yellow_edges}
-        yellow_edges = []
-
-        phase+=1
-
+                if n not in know_nodes:
+                    orange_nodes.append(n)
+        orange_nodes = list(dict.fromkeys(orange_nodes))
+        orange_edges = list(dict.fromkeys(orange_edges))
+        nodes_in_phase = {phase+1: orange_nodes}
+        edges_in_phase = {phase+1: orange_edges}
+        
+        #draw sending ACK
+        utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges,green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
+        # draw BFS
+        for e in orange_edges:
+            if e[0] and e[1] in know_nodes:
+                red_edges.append(e)
+                remove_edge(e, unknow_edges)
+            else:
+                BFS.append(e)
+                know_nodes.append(e[0])
+                know_nodes.append(e[1])
+                know_nodes = list(dict.fromkeys(know_nodes))
+                remove_edge(e, unknow_edges)
+        utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
+        
+        know_edges+= orange_edges
+        orange_edges = []
+        orange_nodes = []
+        red_edges = []
+        utils.draw_graph(G, blue_nodes=unknow_nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
+        red_edges= []
+        phase+= 1
+        print(nodes_in_phase)
+        print(edges_in_phase)
 
 def remove_edge(edge, edges):
-    if edge in edges:
+    try:
+        if edge in edges:
             edges.remove(edge)
-    else:
-        edges.remove((edge[1], edge[0]))
-    return edges
+        else:
+            edges.remove((edge[1], edge[0]))
+    except:
+        pass
