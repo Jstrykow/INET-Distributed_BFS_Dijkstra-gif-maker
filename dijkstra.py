@@ -14,11 +14,6 @@ def dijkstra(G: nx.Graph(), root_id):
     know_edges = []
 
     know_nodes = [root_id]
-    
-    #unknow_nodes = [n for n in G.nodes]
-    #unknow_nodes.remove(root_id)
-
-    #unknow_edges = edges.copy()
     phase = 1
     current_node = root_id
 
