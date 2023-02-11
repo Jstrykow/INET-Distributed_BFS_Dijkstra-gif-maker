@@ -5,10 +5,16 @@
 import matplotlib.pyplot as plt
 import imageio.v2 as imageio # gifs
 import networkx as nx
+import os
+import globals
 
 # to-do add reading from file
 # add algorithms, which would color nodes
 # delete or replace img after changing color; maybe a function
+# names of files
+
+number = 0
+
 
 # dodac zmiane nazwy 
 def define_graph(nodes, edges):
@@ -19,7 +25,7 @@ def define_graph(nodes, edges):
     return G
 
 def draw_graph(G : nx.Graph(), blue_nodes, green_nodes, orange_nodes, orange_edges, red_edges, green_edges):
-    pos = nx.spring_layout(G, seed=100)  # positions for all nodes - seed for reproducibility
+    pos = nx.spring_layout(G, seed=globals.SEED)  # positions for all nodes - seed for reproducibility
    
     # nodes
     nx.draw_networkx_nodes(G, pos,nodelist=blue_nodes, node_color="tab:blue", node_size=700)
@@ -32,43 +38,36 @@ def draw_graph(G : nx.Graph(), blue_nodes, green_nodes, orange_nodes, orange_edg
     nx.draw_networkx_edges(G, pos, edgelist=orange_edges, edge_color="orange", label="ACK", width=4)
     nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color="red", label="NACK", width=4)
     nx.draw_networkx_labels(G, pos, font_size=20, font_color="whitesmoke", font_family="sans-serif")
-    # edge weight labels
-    #edge_labels = nx.get_edge_attributes(G, "weight")
-    #nx.draw_networkx_edge_labels(G, pos, edge_labels)
 
-    # labels
-    
-
+    # show
     ax = plt.gca()
     ax.margins(0.08)
     plt.axis("off")
     plt.tight_layout()
-    plt.show()
+    #plt.show()
 
-
-
-"""
-# names of files
-filenames = []
-directory = "img/"
-
-plt.draw()
-plt.savefig("test.png")
-plt.close() 
-"""
-"""
-for i, edge in enumerate(edges):
-    #print(edge)
-    g.add_edge(edge[0], edge[1])
-    nx.draw(g,with_labels=True)
+    # set name of file
+    filename = f'{globals.DIRECTORY +  str(len(os.listdir(globals.DIRECTORY)))}.png'
     plt.draw()
-# set name of file
-filename = f'{directory + str(i)}.png'
-filenames.append(filename)
-# save frame
-# build gif
-with imageio.get_writer('graph-as-gif.gif', mode='I',  fps=1) as writer:
-    for filename in filenames:
-        image = imageio.imread(filename)
-        writer.append_data(image)
-"""
+    plt.savefig(filename)
+    plt.close()
+    #make_gif(filenames=filenames)
+    # save frame
+    # build gif
+
+def make_gif():
+    with imageio.get_writer('Distributed_BFS_Dijkstra.gif', mode='I',  fps=1) as writer:
+        fi = []
+        for f in os.listdir(globals.DIRECTORY):
+            fi.append(f)
+        for f in fi:
+            image = imageio.imread(globals.DIRECTORY + f)
+            writer.append_data(image)
+    
+
+def clear_folder(d):
+    for f in os.listdir(d):
+        if not f.endswith(".png"):
+            continue
+        os.remove(os.path.join(d, f))
+    

@@ -81,6 +81,7 @@ def dijkstra(G: nx.Graph(), root_id):
         utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=orange_edges, green_edges=BFS, red_edges=red_edges, orange_nodes=orange_nodes)
         phase+= 1
         print(edges_in_phase, nodes_in_phase)
+    utils.draw_graph(G, blue_nodes=G.nodes, green_nodes=know_nodes, orange_edges=[], green_edges=BFS, red_edges=[], orange_nodes=orange_nodes)
     
 def remove_edge(edge, edges):
     try:
