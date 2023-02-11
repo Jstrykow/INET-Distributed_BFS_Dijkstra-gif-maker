@@ -18,7 +18,7 @@ def define_graph(nodes, edges):
     G.add_edges_from(edges)
     return G
 
-def draw_graph(G : nx.Graph(), blue_nodes, oragne_nodes, yellow_edges, red_edges):
+def draw_graph(G : nx.Graph(), blue_nodes, oragne_nodes, yellow_edges, red_edges, green_edges):
     pos = nx.spring_layout(G, seed=100)  # positions for all nodes - seed for reproducibility
    
     # nodes
@@ -28,7 +28,7 @@ def draw_graph(G : nx.Graph(), blue_nodes, oragne_nodes, yellow_edges, red_edges
     nx.draw_networkx_edges(G, pos, edgelist=G.edges(data=True), width=4)
     nx.draw_networkx_edges(G, pos, edgelist=yellow_edges, edge_color="yellow", width=4)
     nx.draw_networkx_edges(G, pos, edgelist=red_edges, edge_color="red", width=4)
-    
+    nx.draw_networkx_edges(G, pos, edgelist=green_edges, edge_color="orange", width=4)
     nx.draw_networkx_labels(G, pos, font_size=20, font_color="whitesmoke", font_family="sans-serif")
     # edge weight labels
     #edge_labels = nx.get_edge_attributes(G, "weight")
