@@ -9,8 +9,6 @@ import os
 import globals
 
 
-ColorLegend = {'No used': 1,'ACK': 2, 'No-ACK': 4, 'Tree': 3}
-
 # dodac zmiane nazwy 
 def define_graph(nodes, edges):
     # undirected graph
@@ -59,8 +57,15 @@ def make_gif():
         fi = []
         for f in os.listdir(globals.DIRECTORY):
             fi.append(f)
-        for f in fi:
-            image = imageio.imread(globals.DIRECTORY + f)
+        fi_2 = []
+        for file in fi:
+            tmp = file.removesuffix(".png")
+            fi_2.append(tmp)
+        print(fi_2)
+        fi_2.sort(key=int)
+        print(fi_2)
+        for f in fi_2:
+            image = imageio.imread(globals.DIRECTORY + f +".png")
             writer.append_data(image)
     
 
